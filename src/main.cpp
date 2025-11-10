@@ -48,7 +48,7 @@ void ReadClockData(uint8_t *hours, uint8_t *minutes){
   */
 }
 
-void SetClockData(){
+void SetClockData(uint8_t hour, uint8_t minute){
 
 }
 
@@ -178,10 +178,6 @@ void setup(){
 
   pinMode(Debug_PIN, OUTPUT);
 
-  digitalWrite(Debug_PIN, HIGH);
-  
-  
-  digitalWrite(Debug_PIN, LOW);
 
   //RTC.setHourMode(CLOCK_H24);
   hour = HOUR;
@@ -197,7 +193,6 @@ void setup(){
 
 void loop(){
   uint32_t currentTime = millis();
-
 
   // Poll if a minute has passed
   if(currentTime >= offset){
@@ -222,6 +217,7 @@ void loop(){
   while(digitalRead(Button1_PIN) == LOW){ //Holding button 1 acts as a set
     delay(20); //debounce
     if(digitalRead(Button1_PIN) == LOW){
+      SetLEDsNRAND(hour, minute);
       setButtonPrev = LOW;
       if(digitalRead(Button2_PIN) == LOW){
         delay(20); //debounce
@@ -254,10 +250,10 @@ void loop(){
 
   if(setButtonPrev == LOW){ //Re-display time with the random effect only when button is released
     //SetLEDs(hour, minute);
+    SetClockData(hour, minute); //set RTC after setting time
     offset = currentTime; //reset offset (seconds past top of minute)
     minute--; //account for trigger to not increment time
     setButtonPrev = HIGH;
   }
-
 
 }
