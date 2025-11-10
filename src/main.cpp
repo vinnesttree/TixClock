@@ -186,7 +186,7 @@ void setup(){
   //RTC.setHourMode(CLOCK_H24);
   hour = HOUR;
   minute = MINUTE;
-  offset = (60 - SECOND) * 1000; //offset time in ms
+  offset = (60 - SECOND) * 1000; //offset time in ms (time past top of the minute)
   //offset = 60 * 1000 - (RTC.getSeconds() * 1000); //calculate offset to next minute
 
   //ReadClockData(&hour, &minute);
@@ -252,45 +252,12 @@ void loop(){
     }
   }
 
-  if(setButtonPrev == LOW){ //Re-display time with the random effect
+  if(setButtonPrev == LOW){ //Re-display time with the random effect only when button is released
     //SetLEDs(hour, minute);
-    offset = currentTime;
-    minute--;
+    offset = currentTime; //reset offset (seconds past top of minute)
+    minute--; //account for trigger to not increment time
     setButtonPrev = HIGH;
   }
 
-  /*
-  //Increment minutes button
-  if((digitalRead(Button1_PIN) == HIGH) && (digitalRead(Button2_PIN) == HIGH)){
-    //button 1 pressed
-    delay(20); //debounce
-    if((digitalRead(Button1_PIN) == HIGH) && (digitalRead(Button2_PIN) == HIGH)){ //still pressed
-      minute++;
-      if(minute >= 60){
-        minute = 0;
-        hour++;
-        if(hour >= 24){
-          hour = 0;
-        }
-      }
-      SetLEDs(hour, minute);
-      while((digitalRead(Button1_PIN) == HIGH) && (digitalRead(Button2_PIN) == HIGH)); //wait for release
-    }
-  }
-
-  //Increment hours button
-  if((digitalRead(Button1_PIN) == HIGH) && (digitalRead(Button3_PIN) == HIGH)){
-    //button 2 pressed
-    delay(20); //debounce
-    if((digitalRead(Button1_PIN) == HIGH) && (digitalRead(Button3_PIN) == HIGH)){ //still pressed
-      hour++;
-      if(hour >= 24){
-        hour = 0;
-      }
-      SetLEDs(hour, minute);
-      while((digitalRead(Button1_PIN) == HIGH) && (digitalRead(Button3_PIN) == HIGH)); //wait for release
-    }
-  }
-  */
 
 }
