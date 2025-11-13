@@ -31,5 +31,6 @@
 *.out
 *.app
 
-# Folder
+# Build Folders
 .pio/build
+PCB/PCBProject-backups

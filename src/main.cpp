@@ -250,7 +250,7 @@ void loop(){
 
   if(setButtonPrev == LOW){ //Re-display time with the random effect only when button is released
     //SetLEDs(hour, minute);
-    SetClockData(hour, minute); //set RTC after setting time
+    //SetClockData(hour, minute); //set RTC after setting time
     offset = currentTime; //reset offset (seconds past top of minute)
     minute--; //account for trigger to not increment time
     setButtonPrev = HIGH;
